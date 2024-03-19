@@ -17,8 +17,7 @@
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
   </header>
 
-  <div class="d-flex flex-column justify-content-center text-muted
-  flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3"></div>
+  <div class="d-flex flex-column"></div>
     {% for entry in site.data.contact %}
       {% case entry.type %}
         {% when 'github', 'twitter' %}
@@ -93,9 +92,9 @@
         <i class="fas fa-adjust"></i>
       </button>
 
-      {% if site.data.contact.size > 0 %}
+      <!-- {% if site.data.contact.size > 0 %}
         <span class="icon-border"></span>
-      {% endif %}
+      {% endif %} -->
     {% endunless %}
 
   </div>
