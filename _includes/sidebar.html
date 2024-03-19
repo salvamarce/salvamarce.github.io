@@ -16,7 +16,8 @@
     </h1>
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
   </header>
-  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100"></div>
+
+  <div class="d-flex flex-wrap  align-items-center w-100"></div>
     {% for entry in site.data.contact %}
       {% case entry.type %}
         {% when 'github', 'twitter' %}
