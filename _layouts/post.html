@@ -26,7 +26,7 @@ tail_includes:
       </span>
 
       <!-- lastmod date -->
-      {% if page.last_modified_at and page.last_modified_at != page.date %}
+      <!-- {% if page.last_modified_at and page.last_modified_at != page.date %}
         <span>
           {{ site.data.locales[lang].post.updated }}
           {% include datetime.html date=page.last_modified_at tooltip=true lang=lang %}
@@ -48,10 +48,10 @@ tail_includes:
             <figcaption class="text-center pt-2 pb-2">{{ page.image.alt }}</figcaption>
           {%- endif -%}
         </div>
-      {% endif %}
+      {% endif %} -->
 
-      <div class="d-flex justify-content-between">
-        <!-- author(s) -->
+      <!-- author(s) -->
+      <!-- <div class="d-flex justify-content-between">   
         <span>
           {% if page.author %}
             {% assign authors = page.author %}
@@ -75,7 +75,7 @@ tail_includes:
               <a href="{{ site.social.links[0] }}">{{ site.social.name }}</a>
             {% endif %}
           </em>
-        </span>
+        </span> -->
 
         <div>
           <!-- pageviews -->
