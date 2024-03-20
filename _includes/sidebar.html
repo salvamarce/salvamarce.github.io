@@ -15,53 +15,57 @@
       <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
     </h1>
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
+
   </header>
 
-  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100"></div>
-    <span class="icon-border"></span>
-    {% for entry in site.data.contact %}
-      {% case entry.type %}
-        {% when 'github', 'twitter' %}
-          {%- capture url -%}
-            https://{{ entry.type }}.com/{{ site[entry.type].username }}
-          {%- endcapture -%}
-        {% when 'email' %}
-          {% assign email = site.social.email | split: '@' %}
-          {%- capture url -%}
-            javascript:location.href = 'mailto:' + ['{{ email[0] }}','{{ email[1] }}'].join('@')
-          {%- endcapture -%}
-        {% when 'rss' %}
-          {% assign url = '/feed.xml' | relative_url %}
-        {% else %}
-          {% assign url = entry.url %}
-      {% endcase %}
+  <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
+    &emsp;
+    {% unless site.theme_mode %}
+    <!-- <span class="icon-border"></span> -->
+      {% for entry in site.data.contact %}
+        {% case entry.type %}
+          {% when 'github', 'twitter' %}
+            {%- capture url -%}
+              https://{{ entry.type }}.com/{{ site[entry.type].username }}
+            {%- endcapture -%}
+          {% when 'email' %}
+            {% assign email = site.social.email | split: '@' %}
+            {%- capture url -%}
+              javascript:location.href = 'mailto:' + ['{{ email[0] }}','{{ email[1] }}'].join('@')
+            {%- endcapture -%}
+          {% when 'rss' %}
+            {% assign url = '/feed.xml' | relative_url %}
+          {% else %}
+            {% assign url = entry.url %}
+        {% endcase %}
 
-      {% if url %}
-        <a
-          href="{{ url }}"
-          aria-label="{{ entry.type }}"
-          {% assign link_types = '' %}
+        {% if url %}
+          <a
+            href="{{ url }}"
+            aria-label="{{ entry.type }}"
+            {% assign link_types = '' %}
 
-          {% unless entry.noblank %}
-            target="_blank"
-            {% assign link_types = 'noopener noreferrer' %}
-          {% endunless %}
+            {% unless entry.noblank %}
+              target="_blank"
+              {% assign link_types = 'noopener noreferrer' %}
+            {% endunless %}
 
-          {% if entry.type == 'mastodon' %}
-            {% assign link_types = link_types | append: ' me' | strip %}
+            {% if entry.type == 'mastodon' %}
+              {% assign link_types = link_types | append: ' me' | strip %}
+            {% endif %}
+
+            {% unless link_types == empty %}
+              rel="{{ link_types }}"
+            {% endunless %}
+          >
+            <i class="{{ entry.icon }}"></i>
+          </a>          
           {% endif %}
+          <!-- <span class="icon-border"></span> -->
+      {% endfor %}
+    {% endunless %}
 
-          {% unless link_types == empty %}
-            rel="{{ link_types }}"
-          {% endunless %}
-        >
-          <i class="{{ entry.icon }}"></i>
-        </a>
-      {% endif %}
-      <span class="icon-border"></span>
-    {% endfor %}
   </div>
-
   
   <!-- .profile-wrapper -->
 
@@ -76,14 +80,16 @@
       </li>
       <!-- the real tabs -->
       {% for tab in site.tabs %}
-        <li class="nav-item{% if tab.url == page.url %}{{ " active" }}{% endif %}">
-          <a href="{{ tab.url | relative_url }}" class="nav-link">
-            <i class="fa-fw {{ tab.icon }}"></i>
-            {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
-
-            <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
-          </a>
-        </li>
+        {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
+        {%- if tab_name != "tags" and tab_name != "archives" and tab_name != "categories" -%}
+          <li class="nav-item{% if tab.url == page.url %}{{ " active" }}{% endif %}">
+            <a href="{{ tab.url | relative_url }}" class="nav-link">
+              <i class="fa-fw {{ tab.icon }}"></i>
+            
+                <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
+            </a>
+          </li>
+        {% endif %}
         <!-- .nav-item -->
       {% endfor %}
     </ul>
@@ -94,10 +100,6 @@
       <button type="button" class="mode-toggle btn" aria-label="Switch Mode">
         <i class="fas fa-adjust"></i>
       </button>
-
-      <!-- {% if site.data.contact.size > 0 %}
-        <span class="icon-border"></span>
-      {% endif %} -->
     {% endunless %}
 
   </div>
